@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────
+   THE LIVING FILM — design tokens (DESIGN LOCK: exactly 4 values)
+   ───────────────────────────────────────────────────────────── */
+:root {
+  --ink: #0b0b0c; /* bg   */
+  --bone: #ede8df; /* text */
+  --dim: #8a857c; /* captions */
+  --rec: #e5484d; /* REC dot */
+  --line: #1e1d1b; /* hairline rule (no border brighter than this) */
+  --grain-opacity: 0.05;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-bone: var(--bone);
+  --color-dim: var(--dim);
+  --color-rec: var(--rec);
+  --color-line: var(--line);
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+@layer base {
+  html {
+    background: var(--ink);
+    color: var(--bone);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: var(--ink);
+    color: var(--bone);
+    font-family: var(--font-sans), system-ui, sans-serif;
+    overflow-x: hidden;
+    min-height: 100svh;
+  }
+
+  ::selection {
+    background: var(--bone);
+    color: var(--ink);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-weight: 400;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   TYPOGRAPHY SCALE (two families only; never faux weight/italic)
+   ───────────────────────────────────────────────────────────── */
+@layer components {
+  .display-xl {
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: clamp(3.5rem, 12vw, 11rem);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .display {
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: clamp(2.25rem, 6vw, 5rem);
+    line-height: 0.95;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  .body-copy {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: clamp(1rem, 1.1vw, 1.125rem);
+    line-height: 1.6;
+    max-width: 42ch;
+    text-wrap: pretty;
+  }
+
+  .subtitle {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+  }
+
+  .hud {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-feature-settings: "tnum" 1;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   UTILITIES
+   ───────────────────────────────────────────────────────────── */
+@layer utilities {
+  .tabular {
+    font-feature-settings: "tnum" 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* 12-col grid: 24px gutters mobile, 80px margins desktop */
+  .film-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 24px;
+    padding-inline: 24px;
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .film-grid {
+      padding-inline: 80px;
+    }
+  }
+}
+
+/* Skip-to-content link (a11y) */
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 16px;
+  z-index: 100;
+  padding: 10px 16px;
+  background: var(--bone);
+  color: var(--ink);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 16px;
+}
+
+/* Respect reduced motion: kill all scroll/animation motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
