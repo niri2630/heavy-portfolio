@@ -31,10 +31,7 @@ export function Nav() {
           {n.label}
         </a>
       ))}
-      <span
-        className="label hidden px-3 py-2.5 text-ink-soft md:block"
-        title="achievements"
-      >
+      <span className="label px-3 py-2.5 text-ink-soft" title="achievements">
         🏆 {unlocked.length}/{TOTAL}
       </span>
       <button
@@ -46,7 +43,7 @@ export function Nav() {
           toggleMute();
           click(); // the mute toggle gets the last word
         }}
-        className="label cursor-pointer rounded-full px-4 py-2.5 text-ink-soft transition-colors hover:bg-white/60 hover:text-ink"
+        className="label cursor-pointer whitespace-nowrap rounded-full px-4 py-2.5 text-ink-soft transition-colors hover:bg-white/60 hover:text-ink"
       >
         {muted ? "sound: off" : "sound: on"}
       </button>

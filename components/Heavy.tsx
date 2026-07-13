@@ -21,7 +21,7 @@ export function Heavy() {
       {toast && (
         <div
           role="status"
-          className="glass label fixed bottom-6 left-1/2 z-50 -translate-x-1/2 whitespace-nowrap px-6 py-4 text-ink"
+          className="glass label fixed bottom-6 left-1/2 z-50 w-max max-w-[92vw] -translate-x-1/2 px-6 py-4 text-center text-ink"
         >
           {toast}
         </div>

@@ -3,7 +3,8 @@
     "allow": [
       "Bash(pnpm create *)",
       "Bash(rm -rf components/film components/chrome components/scenes components/sections lib/gsap.ts lib/lenis.ts lib/manifest.ts lib/timecode.ts public/film)",
-      "Bash(pnpm remove *)"
+      "Bash(pnpm remove *)",
+      "mcp__plugin_playwright_playwright__browser_resize"
     ]
   }
 }

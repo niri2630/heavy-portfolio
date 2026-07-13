@@ -134,14 +134,24 @@ export function Shelf({ reduced }: { reduced: boolean }) {
       ) : (
         <>
           <div
-            className="relative"
+            className="relative touch-none"
             onPointerMove={(e) => {
               if (claw.current.state !== "idle") return;
+              // mouse aims on hover; touch aims while the finger is down
+              if (e.pointerType !== "mouse" && e.buttons === 0) return;
               const r = e.currentTarget.getBoundingClientRect();
               claw.current.x = Math.min(Math.max((e.clientX - r.left) / r.width, 0.06), 0.94);
             }}
-            onPointerDown={() => {
-              if (claw.current.state === "idle") {
+            onPointerDown={(e) => {
+              // mouse: click drops immediately. touch: finger down starts aiming.
+              if (e.pointerType === "mouse" && claw.current.state === "idle") {
+                click();
+                claw.current.state = "down";
+              }
+            }}
+            onPointerUp={(e) => {
+              // touch: lifting the finger drops the claw where you aimed
+              if (e.pointerType !== "mouse" && claw.current.state === "idle") {
                 click();
                 claw.current.state = "down";
               }
@@ -223,7 +233,7 @@ export function Shelf({ reduced }: { reduced: boolean }) {
               >
                 {miss
                   ? "✕ so close — every arcade lies a little. again!"
-                  : "◉ insert click · aim with pointer · win a case study"}
+                  : "◉ aim · drop the claw · win a case study"}
               </span>
             </PhysicsZone>
           </div>

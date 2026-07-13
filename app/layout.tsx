@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     description: site.description,
     images: ["/og.jpg"],
   },
-  icons: { icon: "/favicon.ico" },
+  icons: { icon: "/icon.svg" },
 };
 
 export const viewport: Viewport = {
