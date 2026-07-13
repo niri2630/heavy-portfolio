@@ -1,53 +1,76 @@
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────
-   THE LIVING FILM — design tokens (DESIGN LOCK: exactly 4 values)
+   HEAVY — clay & glass on paper
+   Clay = objects you play with. Glass = chrome you read through.
    ───────────────────────────────────────────────────────────── */
 :root {
-  --ink: #0b0b0c; /* bg   */
-  --bone: #ede8df; /* text */
-  --dim: #8a857c; /* captions */
-  --rec: #e5484d; /* REC dot */
-  --line: #1e1d1b; /* hairline rule (no border brighter than this) */
-  --grain-opacity: 0.05;
+  /* stage */
+  --paper: #faf6ef;
+  --grid: #e4dfd4;
+  --ink: #2a2438;
+  --ink-soft: #6f6880;
+
+  /* clay palette */
+  --coral: #ff6b6b;
+  --tangerine: #ff9f43;
+  --sunflower: #ffd93d;
+  --mint: #6bcb77;
+  --sky: #4d96ff;
+  --grape: #b39ddb;
+
+  /* glass */
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 8px 32px rgba(42, 36, 56, 0.12);
 }
 
 @theme inline {
+  --color-paper: var(--paper);
+  --color-grid: var(--grid);
   --color-ink: var(--ink);
-  --color-bone: var(--bone);
-  --color-dim: var(--dim);
-  --color-rec: var(--rec);
-  --color-line: var(--line);
-  --font-serif: var(--font-serif);
-  --font-sans: var(--font-sans);
+  --color-ink-soft: var(--ink-soft);
+  --color-coral: var(--coral);
+  --color-tangerine: var(--tangerine);
+  --color-sunflower: var(--sunflower);
+  --color-mint: var(--mint);
+  --color-sky: var(--sky);
+  --color-grape: var(--grape);
+  --font-display: var(--font-display);
   --font-mono: var(--font-mono);
+  --font-body: var(--font-body);
 }
 
 @layer base {
   html {
-    background: var(--ink);
-    color: var(--bone);
+    background: var(--paper);
+    color: var(--ink);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
   body {
-    background: var(--ink);
-    color: var(--bone);
-    font-family: var(--font-sans), system-ui, sans-serif;
+    background-color: var(--paper);
+    /* faint engineering grid — the drafting stage the clay sits on */
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 32px 32px;
+    color: var(--ink);
+    font-family: var(--font-body), system-ui, sans-serif;
     overflow-x: hidden;
     min-height: 100svh;
   }
 
   ::selection {
-    background: var(--bone);
+    background: var(--sunflower);
     color: var(--ink);
   }
 
   h1,
   h2,
   h3 {
-    font-weight: 400;
+    font-family: var(--font-display), system-ui, sans-serif;
     text-wrap: balance;
   }
 
@@ -55,106 +78,429 @@
     text-wrap: pretty;
   }
 
-  em {
-    font-style: italic;
-  }
-
   a {
     color: inherit;
-    text-decoration: none;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--sky);
+    outline-offset: 3px;
+    border-radius: 6px;
   }
 }
 
 /* ─────────────────────────────────────────────────────────────
-   TYPOGRAPHY SCALE (two families only; never faux weight/italic)
+   TYPOGRAPHY
    ───────────────────────────────────────────────────────────── */
 @layer components {
   .display-xl {
-    font-family: var(--font-serif), Georgia, serif;
-    font-size: clamp(3.5rem, 12vw, 11rem);
-    line-height: 0.92;
-    letter-spacing: -0.02em;
-    text-wrap: balance;
+    font-family: var(--font-display), sans-serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 11vw, 9.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
   }
 
   .display {
-    font-family: var(--font-serif), Georgia, serif;
-    font-size: clamp(2.25rem, 6vw, 5rem);
-    line-height: 0.95;
-    letter-spacing: -0.015em;
-    text-wrap: balance;
+    font-family: var(--font-display), sans-serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 5.5vw, 4.25rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .display-sm {
+    font-family: var(--font-display), sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.35rem, 2.6vw, 2rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
   }
 
   .body-copy {
-    font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: clamp(1rem, 1.1vw, 1.125rem);
-    line-height: 1.6;
-    max-width: 42ch;
-    text-wrap: pretty;
+    font-family: var(--font-body), sans-serif;
+    font-size: clamp(1rem, 1.15vw, 1.1875rem);
+    line-height: 1.65;
+    max-width: 46ch;
   }
 
-  .subtitle {
-    font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 0.8125rem;
-    line-height: 1.4;
-  }
-
-  .hud {
-    font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 0.6875rem;
-    line-height: 1;
+  .label {
+    font-family: var(--font-mono), monospace;
+    font-size: 0.75rem;
+    line-height: 1.2;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-feature-settings: "tnum" 1;
+    letter-spacing: 0.12em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .label-sm {
+    font-family: var(--font-mono), monospace;
+    font-size: 0.6875rem;
+    line-height: 1.2;
+    letter-spacing: 0.04em;
     font-variant-numeric: tabular-nums;
   }
 }
 
 /* ─────────────────────────────────────────────────────────────
-   UTILITIES
+   CLAY — puffy, candy, physical
    ───────────────────────────────────────────────────────────── */
-@layer utilities {
-  .tabular {
-    font-feature-settings: "tnum" 1;
-    font-variant-numeric: tabular-nums;
+@layer components {
+  .clay,
+  .clay-sm {
+    position: relative;
+    isolation: isolate;
   }
 
-  /* 12-col grid: 24px gutters mobile, 80px margins desktop */
-  .film-grid {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: 24px;
-    padding-inline: 24px;
-    width: 100%;
+  .clay {
+    border-radius: 26px;
+    box-shadow:
+      inset 0 10px 14px rgba(255, 255, 255, 0.65),
+      inset 0 -12px 18px rgba(42, 36, 56, 0.28),
+      inset 6px 0 10px rgba(255, 255, 255, 0.18),
+      inset -6px 0 10px rgba(42, 36, 56, 0.1);
   }
 
-  @media (min-width: 768px) {
-    .film-grid {
-      padding-inline: 80px;
-    }
+  .clay-sm {
+    border-radius: 18px;
+    box-shadow:
+      inset 0 6px 9px rgba(255, 255, 255, 0.6),
+      inset 0 -8px 12px rgba(42, 36, 56, 0.24),
+      inset 4px 0 7px rgba(255, 255, 255, 0.16),
+      inset -4px 0 7px rgba(42, 36, 56, 0.09);
+  }
+
+  /* radial dome highlight — the "squeezed putty" sheen */
+  .clay::after,
+  .clay-sm::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      70% 55% at 50% 22%,
+      rgba(255, 255, 255, 0.38) 0%,
+      rgba(255, 255, 255, 0.08) 45%,
+      transparent 70%
+    );
+    pointer-events: none;
+    /* parent is isolated ⇒ -1 paints above its background, below its text */
+    z-index: -1;
+  }
+
+  .clay-coral { background: color-mix(in oklab, var(--coral) 92%, #7a1f2b 8%); }
+  .clay-tangerine { background: color-mix(in oklab, var(--tangerine) 92%, #8a4a10 8%); }
+  .clay-sunflower { background: color-mix(in oklab, var(--sunflower) 94%, #8a6d10 6%); }
+  .clay-mint { background: color-mix(in oklab, var(--mint) 92%, #1f5c33 8%); }
+  .clay-sky { background: color-mix(in oklab, var(--sky) 92%, #1d3f8a 8%); }
+  .clay-grape { background: color-mix(in oklab, var(--grape) 92%, #4a3a7a 8%); }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   GLASS — frosted chrome
+   ───────────────────────────────────────────────────────────── */
+@layer components {
+  .glass {
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    backdrop-filter: blur(14px) saturate(1.4);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: 20px;
+  }
+
+  .glass-pill {
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    backdrop-filter: blur(14px) saturate(1.4);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: 999px;
   }
 }
 
-/* Skip-to-content link (a11y) */
+/* ─────────────────────────────────────────────────────────────
+   PHYSICS BODIES
+   ───────────────────────────────────────────────────────────── */
+.phys-body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  cursor: grab;
+  /* perspective per body so drag-tilt reads as true 3D */
+  perspective: 700px;
+}
+.phys-body:active {
+  cursor: grabbing;
+}
+/* squash & stretch + tilt shell — separate element so it composes with the
+   physics transform instead of fighting it */
+.phys-skin {
+  display: grid;
+  place-items: center;
+  transition:
+    scale 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 0.12s ease-out;
+  transform-style: preserve-3d;
+}
+/* grabbed clay squishes in — putty under your thumb */
+.phys-body:active .phys-skin > * {
+  filter: brightness(1.04);
+}
+
+/* ground shadow cast by each body — detaches when airborne (the 3D trick) */
+.phys-shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(42, 36, 56, 0.38) 0%,
+    rgba(42, 36, 56, 0.16) 55%,
+    transparent 75%
+  );
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   GAME DIORAMAS — every zone is a shadow-box you look into
+   ───────────────────────────────────────────────────────────── */
+.zone-box {
+  position: relative;
+  border-radius: 28px;
+  background:
+    radial-gradient(120% 100% at 50% 0%, var(--zone-tint, rgba(77, 150, 255, 0.07)) 0%, transparent 60%),
+    linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.14)),
+    var(--paper);
+  box-shadow:
+    inset 0 14px 24px rgba(42, 36, 56, 0.1),
+    inset 0 -6px 14px rgba(255, 255, 255, 0.6),
+    inset 14px 0 24px rgba(42, 36, 56, 0.05),
+    inset -14px 0 24px rgba(42, 36, 56, 0.05),
+    0 18px 34px -18px rgba(42, 36, 56, 0.3);
+  border: 1px solid rgba(42, 36, 56, 0.07);
+}
+/* diorama floor plane */
+.zone-box::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 56px;
+  border-radius: 0 0 28px 28px;
+  background: linear-gradient(transparent, rgba(42, 36, 56, 0.09));
+  pointer-events: none;
+}
+
+/* balloon body — teardrop + knot; string hangs free (visual only) */
+.balloon {
+  border-radius: 50% 50% 48% 48% / 56% 56% 42% 42%;
+}
+.balloon::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  translate: -50% 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 9px solid rgba(42, 36, 56, 0.28);
+}
+.balloon-string {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 2px;
+  height: 46px;
+  background: linear-gradient(rgba(42, 36, 56, 0.35), rgba(42, 36, 56, 0.08));
+  border-radius: 2px;
+  transform-origin: top;
+  animation: string-sway 2.4s ease-in-out infinite alternate;
+}
+@keyframes string-sway {
+  from { rotate: -7deg; }
+  to { rotate: 7deg; }
+}
+
+/* measuring ruler for the tower game */
+.ruler {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 34px;
+  border-right: 2px solid rgba(42, 36, 56, 0.18);
+  background:
+    repeating-linear-gradient(
+      to top,
+      rgba(42, 36, 56, 0.3) 0 2px,
+      transparent 2px 25px
+    ),
+    repeating-linear-gradient(
+      to top,
+      rgba(42, 36, 56, 0.45) 0 2px,
+      transparent 2px 100px
+    );
+  background-position: right;
+  background-size: 12px 100%, 20px 100%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+/* basketball seams */
+.bball {
+  background:
+    radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.35) 0%, transparent 42%),
+    linear-gradient(to right, transparent 47.5%, rgba(42, 36, 56, 0.55) 47.5% 52.5%, transparent 52.5%),
+    linear-gradient(to bottom, transparent 47.5%, rgba(42, 36, 56, 0.55) 47.5% 52.5%, transparent 52.5%),
+    radial-gradient(140% 140% at -30% 50%, transparent 62%, rgba(42, 36, 56, 0.5) 62.5% 64.5%, transparent 65%),
+    radial-gradient(140% 140% at 130% 50%, transparent 62%, rgba(42, 36, 56, 0.5) 62.5% 64.5%, transparent 65%),
+    radial-gradient(circle at 50% 45%, var(--tangerine) 0%, color-mix(in oklab, var(--tangerine) 78%, #7a3410 22%) 100%);
+  box-shadow:
+    inset 0 8px 12px rgba(255, 255, 255, 0.35),
+    inset 0 -10px 14px rgba(42, 36, 56, 0.35);
+}
+
+/* hoop net — zigzag mesh */
+.net {
+  background:
+    repeating-linear-gradient(105deg, rgba(250, 246, 239, 0.9) 0 2px, transparent 2px 12px),
+    repeating-linear-gradient(75deg, rgba(250, 246, 239, 0.9) 0 2px, transparent 2px 12px);
+  clip-path: polygon(4% 0%, 96% 0%, 78% 100%, 22% 100%);
+  filter: drop-shadow(0 3px 3px rgba(42, 36, 56, 0.18));
+}
+
+/* arcade marquee for the claw cabinet */
+.marquee {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  translate: -50% -55%;
+  z-index: 20;
+  letter-spacing: 0.28em;
+  animation: marquee-glow 2.2s ease-in-out infinite alternate;
+}
+@keyframes marquee-glow {
+  from { filter: drop-shadow(0 0 4px rgba(255, 159, 67, 0.35)); }
+  to { filter: drop-shadow(0 0 14px rgba(255, 159, 67, 0.75)); }
+}
+
+/* glass front sheen on the claw cabinet */
+.cabinet-glass {
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  background: linear-gradient(
+    115deg,
+    transparent 42%,
+    rgba(255, 255, 255, 0.16) 46%,
+    rgba(255, 255, 255, 0.05) 55%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+/* scoreboard numbers */
+.score-big {
+  font-family: var(--font-mono), monospace;
+  font-size: 1.6rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+/* soft ambient blobs behind the hero */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* per-game tints (feed .zone-box's --zone-tint) */
+.tint-sky { --zone-tint: rgba(77, 150, 255, 0.16); }
+.tint-grape { --zone-tint: rgba(179, 157, 219, 0.22); }
+.tint-mint { --zone-tint: rgba(107, 203, 119, 0.16); }
+.tint-tangerine { --zone-tint: rgba(255, 159, 67, 0.16); }
+
+/* ball speed trail */
+.trail-dot {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 50%;
+  background: rgba(255, 159, 67, 0.5);
+  pointer-events: none;
+  animation: trail-fade 0.4s ease-out forwards;
+}
+@keyframes trail-fade {
+  to {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+}
+
+/* impact dust puffs */
+.dust {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(42, 36, 56, 0.22);
+  pointer-events: none;
+  animation: dust-fly 0.45s ease-out forwards;
+}
+@keyframes dust-fly {
+  to {
+    transform: translate(var(--dx), var(--dy)) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* confetti burst directions */
+@keyframes confetti-0 {
+  to { transform: translate(-46px, -38px) rotate(160deg); opacity: 0; }
+}
+@keyframes confetti-1 {
+  to { transform: translate(42px, -46px) rotate(-140deg); opacity: 0; }
+}
+@keyframes confetti-2 {
+  to { transform: translate(-34px, 40px) rotate(120deg); opacity: 0; }
+}
+@keyframes confetti-3 {
+  to { transform: translate(48px, 34px) rotate(-170deg); opacity: 0; }
+}
+
+/* Skip link */
 .skip-link {
   position: fixed;
   top: -100px;
   left: 16px;
   z-index: 100;
-  padding: 10px 16px;
-  background: var(--bone);
-  color: var(--ink);
+  padding: 10px 18px;
+  background: var(--ink);
+  color: var(--paper);
   font-family: var(--font-mono), monospace;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
+  border-radius: 999px;
   transition: top 0.2s ease;
 }
 .skip-link:focus {
   top: 16px;
 }
 
-/* Respect reduced motion: kill all scroll/animation motion */
+/* Reduced motion: settle the world, kill all motion */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

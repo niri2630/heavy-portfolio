@@ -1,12 +1,13 @@
 /**
- * lib/content.ts — every word on the site lives here. Nothing is hardcoded in
- * components. Voice: declarative, short, filmic. (See COPY BAN LIST in spec.)
+ * lib/content.ts — every word on the site lives here; components stay dumb.
+ * Voice: playful, confident, short. This is a physics toy that happens to be
+ * a portfolio — copy should wink, never beg.
  */
 
 export const site = {
   title: "Niriksh — Full-Stack & Mobile Developer",
   description:
-    "THE LIVING FILM — a scroll-driven portfolio. Full-stack and mobile software, written, directed, and shipped by one person.",
+    "HEAVY — a physics playground portfolio. Niriksh builds full-stack and mobile software end to end. Grab something and throw it.",
   url: "https://niriksh.com",
   email: "hello@niriksh.com", // [EMAIL] placeholder
   github: "https://github.com/niriksh", // [GITHUB_URL] placeholder
@@ -14,141 +15,203 @@ export const site = {
   location: "Mumbai, India",
 } as const;
 
-/** Fake runtime the timecode HUD counts toward: 02:47 (mm:ss). */
-export const runtime = { minutes: 2, seconds: 47, fps: 24 } as const;
+export type ClayColor =
+  | "coral"
+  | "tangerine"
+  | "sunflower"
+  | "mint"
+  | "sky"
+  | "grape";
 
-export const boot = {
-  presents: ["NIRIKSH", "PRESENTS"],
-  cue: "scroll to begin ↓",
+/* ─────────────── THE DROP (hero) ─────────────── */
+
+export const hero = {
+  letters: ["N", "I", "R", "I", "K", "S", "H"] as const,
+  letterColors: [
+    "coral",
+    "tangerine",
+    "sunflower",
+    "mint",
+    "sky",
+    "grape",
+    "coral",
+  ] as ClayColor[],
+  tagline: "Full-stack developer.",
+  taglineB: "Everything I build has weight.",
+  hint: "grab a letter · throw it · nothing breaks",
+  redrop: "re-drop",
 } as const;
 
-/** Scene A — title lines keyed to scrub progress (0..1). */
-export const sceneA = {
-  label: "SCENE A",
-  lines: [
-    { at: [0.1, 0.3] as const, text: "Full-stack." },
-    { at: [0.35, 0.55] as const, text: "Mobile." },
-    { at: [0.6, 0.9] as const, text: "Cinema-grade software." },
+/* ─────────────── THE DESK (about) ─────────────── */
+
+export const about = {
+  zone: "01 · the desk",
+  heading: "One person. Whole products.",
+  body: [
+    "I'm Niriksh — a full-stack and mobile developer, currently a Software Engineer at Claybag. I design, build, and ship complete products end to end: mobile apps, web platforms, and the backends that run them.",
+    "No hand-offs. No gaps between design and engineering. Just one person who cares about how software feels — right down to how much it weighs.",
+  ],
+  facts: [
+    { text: "SWE @ Claybag", color: "coral" as ClayColor },
+    { text: "Based in Mumbai", color: "sky" as ClayColor },
+    { text: "Mobile + Web + Backend", color: "mint" as ClayColor },
+    { text: "Ships end to end", color: "sunflower" as ClayColor },
+  ],
+  experience: [
+    {
+      period: "Mar 2026 — now",
+      role: "Software Engineer",
+      org: "Claybag",
+      where: "claybag.com",
+      stack: "Full stack · Commerce",
+    },
+    {
+      period: "Aug 2025 — Mar 2026",
+      role: "Software Engineer",
+      org: "Frush",
+      where: "Bengaluru",
+      stack: "React Native · Flutter · Laravel",
+    },
+    {
+      period: "Feb — Aug 2025",
+      role: "Full-Stack Intern",
+      org: "Terabite",
+      where: "Bengaluru",
+      stack: "Full stack · System design · Scalability",
+    },
+    {
+      period: "Mar — Aug 2024",
+      role: "Technical Intern",
+      org: "Sellingly",
+      where: "Remote",
+      stack: "Firebase · AngularJS · CSS",
+    },
   ],
 } as const;
 
-export const interlude = {
-  headline: ["EVERY FRAME", "MATTERS."],
-  paragraph:
-    "I build software the way films are made — obsessing over every frame. Apps, platforms, backends. Written, directed, and shipped by one person.",
-} as const;
+/* ─────────────── THE SHELF (work) ─────────────── */
 
-/** Scene B — skill captions, appear as sequential subtitles. */
-export const sceneB = {
-  label: "SCENE B",
-  subtitles: [
-    "React Native · Flutter",
-    "Next.js · React · Vue",
-    "FastAPI · Node.js · PostgreSQL",
-    "AWS · GCP · CI/CD",
-  ],
-} as const;
-
-/** Selected works — chapter cards. Structure ready for future /work/[slug]. */
-export type Chapter = {
-  index: string;
+export type Project = {
   slug: string;
   title: string;
-  line: string;
-  badge: string;
+  emojiFree: string; // short mono glyph label for the crate face
+  what: string;
+  role: string;
+  stack: string[];
+  status: string;
+  color: ClayColor;
 };
 
-export const works: Chapter[] = [
-  {
-    index: "CH.01",
-    slug: "frush",
-    title: "Frush",
-    line: "10-minute food delivery, cross-platform.",
-    badge: "CHAPTER COMING SOON",
-  },
-  {
-    index: "CH.02",
-    slug: "claybag",
-    title: "Claybag",
-    line: "Branding & merch commerce for startups.",
-    badge: "CHAPTER COMING SOON",
-  },
-  {
-    index: "CH.03",
-    slug: "pamperazzi",
-    title: "Pamperazzi",
-    line: "Luxury salon gifting platform.",
-    badge: "CHAPTER COMING SOON",
-  },
-  {
-    index: "CH.04",
-    slug: "famcare",
-    title: "Famcare",
-    line: "Family care, built in Flutter.",
-    badge: "CHAPTER COMING SOON",
-  },
-];
-
-export const sceneC = {
-  label: "SCENE C",
-  line: "The best part of any film is what comes next.",
+export const workZone = {
+  zone: "02 · the shelf",
+  heading: "Things I've shipped.",
+  hint: "drag a crate · click to open",
 } as const;
 
-/** Credits roll — ordered blocks. */
-export type CreditBlock =
-  | { kind: "title"; text: string }
-  | { kind: "role"; role: string; name: string }
-  | { kind: "list"; role: string; names: string[] }
-  | { kind: "location"; text: string };
-
-export const credits: CreditBlock[] = [
-  { kind: "title", text: "A NIRIKSH PRODUCTION" },
-  { kind: "role", role: "Directed by", name: "NIRIKSH" },
-  { kind: "role", role: "Written by", name: "NIRIKSH" },
-  { kind: "role", role: "Engineered by", name: "NIRIKSH" },
+export const work: Project[] = [
   {
-    kind: "list",
-    role: "Starring",
-    names: ["React Native", "Flutter", "Next.js", "FastAPI", "PostgreSQL"],
+    slug: "frush",
+    title: "Frush",
+    emojiFree: "FR",
+    what: "A 10-minute food delivery app — real-time ordering, live tracking, and dispatch, built cross-platform for iOS and Android.",
+    role: "Software Engineer",
+    stack: ["React Native", "Flutter", "Laravel"],
+    status: "shipped",
+    color: "coral",
   },
   {
-    kind: "list",
-    role: "Supporting",
-    names: [
-      "TypeScript",
-      "Tailwind",
-      "Node.js",
-      "Vue.js",
-      "AWS",
-      "GCP",
-      "Vercel",
-      "Git",
-      "CI/CD",
-    ],
+    slug: "bitez",
+    title: "Bitez",
+    emojiFree: "BZ",
+    what: "A mobile app for discovering and ordering food — designed, built, and shipped as a personal product.",
+    role: "Creator",
+    stack: ["React Native", "Node.js", "MongoDB"],
+    status: "case study soon",
+    color: "sunflower",
   },
-  { kind: "location", text: "Filmed on location in Mumbai, India" },
+  {
+    slug: "claybag",
+    title: "Claybag",
+    emojiFree: "CB",
+    what: "Branding and merch commerce for early-stage startups — storefront, catalog, and checkout in one platform. Where I work now.",
+    role: "Software Engineer",
+    stack: ["Next.js", "FastAPI", "PostgreSQL"],
+    status: "shipping now",
+    color: "sky",
+  },
+  {
+    slug: "pamperazzi",
+    title: "Pamperazzi",
+    emojiFree: "PZ",
+    what: "A luxury salon gifting platform — bookings and gift experiences designed for premium salons.",
+    role: "Full-stack & mobile",
+    stack: ["Flutter", "FastAPI", "PostgreSQL"],
+    status: "case study soon",
+    color: "grape",
+  },
+  {
+    slug: "famcare",
+    title: "Famcare",
+    emojiFree: "FC",
+    what: "Family care, built in Flutter — coordinating everyday care for the people who matter.",
+    role: "Mobile",
+    stack: ["Flutter", "GCP"],
+    status: "case study soon",
+    color: "mint",
+  },
 ];
 
-export const cta = {
-  headline: "BOOK THE SEQUEL",
+/* ─────────────── THE PILE (stack) ─────────────── */
+
+export const stackZone = {
+  zone: "03 · the pile",
+  heading: "The bricks I build with.",
+  hint: "stack them · knock them over",
+} as const;
+
+export const bricks: { text: string; group: string; color: ClayColor }[] = [
+  { text: "React Native", group: "mobile", color: "coral" },
+  { text: "Flutter", group: "mobile", color: "sky" },
+  { text: "Android", group: "mobile", color: "mint" },
+  { text: "iOS", group: "mobile", color: "grape" },
+  { text: "Next.js", group: "frontend", color: "mint" },
+  { text: "React", group: "frontend", color: "sunflower" },
+  { text: "TypeScript", group: "frontend", color: "tangerine" },
+  { text: "Tailwind", group: "frontend", color: "sky" },
+  { text: "Node.js", group: "backend", color: "coral" },
+  { text: "Laravel", group: "backend", color: "tangerine" },
+  { text: "FastAPI", group: "backend", color: "mint" },
+  { text: "MongoDB", group: "backend", color: "grape" },
+  { text: "PostgreSQL", group: "backend", color: "sky" },
+  { text: "Firebase", group: "backend", color: "sunflower" },
+  { text: "AWS", group: "infra", color: "tangerine" },
+  { text: "GCP", group: "infra", color: "sky" },
+  { text: "System Design", group: "infra", color: "coral" },
+  { text: "CI/CD", group: "infra", color: "mint" },
+];
+
+/* ─────────────── THE CHUTE (contact) ─────────────── */
+
+export const contactZone = {
+  zone: "04 · the chute",
+  heading: "Got something heavy to build?",
+  sub: "Toss me a line. I read everything.",
   links: [
-    { label: "Email", href: `mailto:${site.email}` },
-    { label: "GitHub", href: site.github },
-    { label: "LinkedIn", href: site.linkedin },
+    { label: "email", href: `mailto:${site.email}`, display: "hello@niriksh.com", color: "coral" as ClayColor },
+    { label: "github", href: site.github, display: "github.com/niriksh", color: "sky" as ClayColor },
+    { label: "linkedin", href: site.linkedin, display: "in/niriksh", color: "mint" as ClayColor },
   ],
 } as const;
 
-export const postCredits = {
-  line: "He's still shipping.",
+export const footer = {
+  sticker: "built by hand · no component library · 60fps or refund",
+  copyright: `© ${new Date().getFullYear()} Niriksh · Mumbai, India`,
 } as const;
 
-/** Ordered scene metadata used by the HUD scene label + anchor ids. */
-export const chapters = [
-  { id: "boot", label: "BOOT" },
-  { id: "scene-a", label: "SCENE A" },
-  { id: "interlude", label: "INTERLUDE" },
-  { id: "scene-b", label: "SCENE B" },
-  { id: "works", label: "SELECTED WORKS" },
-  { id: "scene-c", label: "SCENE C" },
-  { id: "credits", label: "CREDITS" },
+/** Nav — glass pill anchors. */
+export const nav = [
+  { id: "about", label: "about" },
+  { id: "work", label: "work" },
+  { id: "stack", label: "stack" },
+  { id: "contact", label: "contact" },
 ] as const;

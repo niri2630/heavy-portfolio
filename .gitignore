@@ -43,3 +43,7 @@ next-env.d.ts
 # raw source video (extract to public/film/<scene>/*.webp via scripts)
 /raw/
 *.mp4
+
+# local artifacts
+*.png
+.playwright-mcp/

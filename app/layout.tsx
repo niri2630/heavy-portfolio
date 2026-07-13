@@ -1,26 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Serif, Geist, Geist_Mono } from "next/font/google";
+import { Bricolage_Grotesque, IBM_Plex_Mono, Geist } from "next/font/google";
 import "./globals.css";
-import { SmoothScroll } from "@/lib/lenis";
 import { site } from "@/lib/content";
 
-const serif = Instrument_Serif({
-  weight: "400",
-  style: ["normal", "italic"],
+const display = Bricolage_Grotesque({
   subsets: ["latin"],
-  variable: "--font-serif",
+  variable: "--font-display",
+  weight: ["400", "600", "700", "800"],
   display: "swap",
 });
 
-const sans = Geist({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-});
-
-const mono = Geist_Mono({
+const mono = IBM_Plex_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  weight: ["400", "500"],
+  display: "swap",
+});
+
+const body = Geist({
+  subsets: ["latin"],
+  variable: "--font-body",
   display: "swap",
 });
 
@@ -28,7 +27,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: site.title,
   description: site.description,
-  applicationName: "THE LIVING FILM",
+  applicationName: "HEAVY",
   authors: [{ name: "Niriksh" }],
   keywords: [
     "full-stack developer",
@@ -37,13 +36,14 @@ export const metadata: Metadata = {
     "Flutter",
     "Next.js",
     "portfolio",
+    "physics",
   ],
   openGraph: {
     type: "website",
     url: site.url,
     title: site.title,
     description: site.description,
-    siteName: "THE LIVING FILM",
+    siteName: "HEAVY — Niriksh",
     images: [{ url: "/og.jpg", width: 1200, height: 630, alt: site.title }],
   },
   twitter: {
@@ -56,8 +56,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0B0B0C",
-  colorScheme: "dark",
+  themeColor: "#FAF6EF",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -71,13 +70,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${serif.variable} ${sans.variable} ${mono.variable}`}
+      className={`${display.variable} ${mono.variable} ${body.variable}`}
     >
       <body>
-        <a href="#works" className="skip-link">
-          Skip to content
+        <a href="#work" className="skip-link">
+          Skip to work
         </a>
-        <SmoothScroll>{children}</SmoothScroll>
+        {children}
       </body>
     </html>
   );
